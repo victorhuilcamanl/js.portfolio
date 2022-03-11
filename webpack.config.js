@@ -1,8 +1,9 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   // Entry nos permite decir el punto de entrada de nuestra aplicación
-  entry: "./src/index.js",
+  entry: "./src/index.js", 
   // Output nos permite decir hacia dónde va enviar lo que va a preparar webpacks
   output: {
     // path es donde estará la carpeta donde se guardará los archivos
@@ -15,4 +16,26 @@ module.exports = {
     // Aqui ponemos las extensiones que tendremos en nuestro proyecto para webpack los lea
     extensions: [".js"]
   },
+  module: {
+    rules: [
+      {
+        // Test declara que extensión de archivos aplicara el loader
+        test: /\.js$/,
+        // Exclude permite omitir archivos o carpetas especificas
+        exclude: /node_modules/,
+        // Use es un arreglo u objeto donde dices que loader aplicaras
+        use: {
+          loader: "babel-loader"
+        }
+      }
+    ]
+  },
+  // SECCION DE PLUGINS
+  plugins: [
+    new HtmlWebpackPlugin({ // CONFIGURACIÓN DEL PLUGIN
+        inject: true, // INYECTA EL BUNDLE AL TEMPLATE HTML
+        template: './public/index.html', // LA RUTA AL TEMPLATE HTML
+        filename: './index.html' // NOMBRE FINAL DEL ARCHIVO
+    })
+]
 }
