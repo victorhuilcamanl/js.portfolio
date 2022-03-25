@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin'); //añadir plugin css
 
 module.exports = {
   // Entry nos permite decir el punto de entrada de nuestra aplicación
@@ -27,6 +28,12 @@ module.exports = {
         use: {
           loader: "babel-loader"
         }
+      },
+      {     //configuracion de plugin loader css
+        test: /\.css$/i,
+        use: [MiniCssExtractPlugin.loader,
+        'css-loader'
+      ],
       }
     ]
   },
@@ -36,6 +43,7 @@ module.exports = {
         inject: true, // INYECTA EL BUNDLE AL TEMPLATE HTML
         template: './public/index.html', // LA RUTA AL TEMPLATE HTML
         filename: './index.html' // NOMBRE FINAL DEL ARCHIVO
-    })
+    }),
+    new MiniCssExtractPlugin(), // utilizacion del plugin css
 ]
 }
